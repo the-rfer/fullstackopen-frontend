@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import blogService from '../services/blogs';
 
 const Blog = ({ blog, token, setBlogs, username }) => {
@@ -82,6 +83,13 @@ const Blog = ({ blog, token, setBlogs, username }) => {
             </button>
         </div>
     );
+};
+
+Blog.propTypes = {
+    blog: PropTypes.object.isRequired,
+    token: PropTypes.string.isRequired,
+    setBlogs: PropTypes.func.isRequired,
+    username: PropTypes.string.isRequired,
 };
 
 export default Blog;

@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import PropTypes from 'prop-types';
 
 const Notification = ({ notification }) => {
     const styleRef = useRef(null);
@@ -30,4 +31,9 @@ const Notification = ({ notification }) => {
         );
     }
 };
+
+Notification.propTypes = {
+    notification: PropTypes.object,
+};
+
 export default Notification;

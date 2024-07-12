@@ -1,4 +1,5 @@
 import axios from 'axios';
+import PropTypes from 'prop-types';
 const baseUrl = '/api/blogs';
 
 const getAll = async () => {
@@ -40,6 +41,21 @@ const deleteBlog = async ({ id, token }) => {
     });
 
     return response.data;
+};
+
+postBlog.propTypes = {
+    post: PropTypes.object.isRequired,
+    token: PropTypes.string.isRequired,
+};
+
+incrementLikes.propTypes = {
+    id: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
+};
+
+deleteBlog.propTypes = {
+    id: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired,
 };
 
 export default { getAll, postBlog, incrementLikes, deleteBlog };
