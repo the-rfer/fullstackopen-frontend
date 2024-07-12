@@ -1,34 +1,39 @@
 import { useState } from 'react';
 import loginService from '../services/login';
 
-const Login = ({ setUser }) => {
+const Login = ({ setUser, setNotification, children }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = async (event) => {
-        event.preventDefault();
+    const handleLogin = (e) => {
+        e.preventDefault();
 
-        try {
-            const user = await loginService.login({
+        loginService
+            .login({
                 username,
                 password,
+            })
+            .then((user) => {
+                window.localStorage.setItem('user', JSON.stringify(user));
+                setUser(user);
+                setUsername('');
+                setPassword('');
+            })
+            .catch((error) => {
+                setNotification({
+                    message: error.response.data.error,
+                    type: 'error',
+                });
+                setTimeout(() => {
+                    setNotification(null);
+                }, 5000);
             });
-            window.localStorage.setItem('user', JSON.stringify(user));
-            setUser(user);
-            setUsername('');
-            setPassword('');
-        } catch (exception) {
-            console.log('ERROR: ', exception);
-            // setErrorMessage('Wrong credentials');
-            // setTimeout(() => {
-            //     setErrorMessage(null);
-            // }, 5000);
-        }
     };
 
     return (
         <form onSubmit={handleLogin}>
             <h1>Log in to application</h1>
+            {children}
             <div>
                 username
                 <input
